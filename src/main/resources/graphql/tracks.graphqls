@@ -1,0 +1,25 @@
+schema {
+    query: Query
+    subscription : Subscription
+}
+
+type Track {
+    id: ID!
+    latitude: Float!
+    longitude: Float!
+}
+
+type Query {
+    allTracks(count: Int, offset: Int): [Track]!
+}
+
+type Subscription {
+    tracksChanged(trackIds:[String]): TrackUpdate!
+}
+
+type TrackUpdate {
+    id: ID!
+    latitude: Float!
+    longitude: Float!
+    dateTime: String!
+}
