@@ -30,7 +30,7 @@ Updates to tracks will be pushed based on query variables
 
 ```js
 subscription ($trackIds: [String]) {
-  tracksChanged(trackIds: $trackIds) {
+  changedTrack(trackIds: $trackIds) {
     id
     latitude
     longitude

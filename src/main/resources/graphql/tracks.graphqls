@@ -14,7 +14,7 @@ type Query {
 }
 
 type Subscription {
-    tracksChanged(trackIds:[String]): TrackUpdate!
+    changedTrack(trackIds:[String]): TrackUpdate!
 }
 
 type TrackUpdate {

@@ -3,6 +3,8 @@ package io.microsamples.ui.graphtracks.config;
 import io.microsamples.ui.graphtracks.Query;
 import io.microsamples.ui.graphtracks.Track;
 import io.microsamples.ui.graphtracks.TrackDao;
+import io.microsamples.ui.graphtracks.subscription.Subscription;
+import io.microsamples.ui.graphtracks.subscription.TrackUpdatePublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,4 +25,15 @@ public class GraphQlConfiguration {
     public Query query(TrackDao trackDao){
         return new Query(trackDao);
     }
+
+    @Bean
+    public Subscription subscription(TrackUpdatePublisher trackUpdatePublisher){
+        return new Subscription(trackUpdatePublisher);
+    }
+
+    @Bean
+    public TrackUpdatePublisher trackUpdatePublisher(){
+        return new TrackUpdatePublisher();
+    }
+
 }

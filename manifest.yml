@@ -1,0 +1,6 @@
+---
+applications:
+- name: graph-tracks
+  memory: 896M
+  buildpacks: https://github.com/cloudfoundry/java-buildpack.git
+  path: target/graph-tracks.jar

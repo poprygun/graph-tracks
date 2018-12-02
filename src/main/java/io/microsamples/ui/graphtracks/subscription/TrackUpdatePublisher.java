@@ -8,10 +8,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.observables.ConnectableObservable;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -20,11 +17,11 @@ import java.util.concurrent.TimeUnit;
 
 
 @Slf4j
-@Component
 public class TrackUpdatePublisher {
     private final Flowable<TrackUpdate> publisher;
     private static EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandom();
     private final static Map<UUID, TrackUpdate> CURRENT_TRACKS = new ConcurrentHashMap<>();
+    private final static Random rand = new Random();
 
     private final static List<UUID> tracksToFollow = Arrays.asList(
             UUID.fromString("94a0b5ef-462d-4f95-9512-60a0cc046aef")
@@ -41,32 +38,38 @@ public class TrackUpdatePublisher {
 
 
     public TrackUpdatePublisher() {
-        Observable<TrackUpdate> stockPriceUpdateObservable = Observable.create(emitter -> {
+        Observable<TrackUpdate> trackUpdateObservable = Observable.create(emitter -> {
 
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-            executorService.scheduleAtFixedRate(newTrackUpdate(emitter), 0, 2, TimeUnit.SECONDS);
+            executorService.scheduleAtFixedRate(newTrackUpdate(emitter), 0, 1, TimeUnit.SECONDS);
 
         });
 
-        ConnectableObservable<TrackUpdate> connectableObservable = stockPriceUpdateObservable.share().publish();
+        ConnectableObservable<TrackUpdate> connectableObservable = trackUpdateObservable.share().publish();
         connectableObservable.connect();
 
         publisher = connectableObservable.toFlowable(BackpressureStrategy.BUFFER);
     }
 
+    static {
+        for (UUID aTracksToFollow : tracksToFollow) {
+            CURRENT_TRACKS.put(aTracksToFollow, enhancedRandom.nextObject(TrackUpdate.class));
+        }
+    }
+
     private Runnable newTrackUpdate(ObservableEmitter<TrackUpdate> emitter) {
         return () -> {
-            List<TrackUpdate> stockPriceUpdates = getUpdates(rollDice(0, 10));
-            if (stockPriceUpdates != null) {
-                emitTracks(emitter, stockPriceUpdates);
+            List<TrackUpdate> trackUpdates = getUpdates(randomRoll(0, 10));
+            if (trackUpdates != null) {
+                emitTracks(emitter, trackUpdates);
             }
         };
     }
 
-    private void emitTracks(ObservableEmitter<TrackUpdate> emitter, List<TrackUpdate> stockPriceUpdates) {
-        for (TrackUpdate stockPriceUpdate : stockPriceUpdates) {
+    private void emitTracks(ObservableEmitter<TrackUpdate> emitter, List<TrackUpdate> trackUpdates) {
+        for (TrackUpdate trackUpdate : trackUpdates) {
             try {
-                emitter.onNext(stockPriceUpdate);
+                emitter.onNext(trackUpdate);
             } catch (RuntimeException e) {
                 log.error("Cannot send TrackUpdate", e);
             }
@@ -92,20 +95,12 @@ public class TrackUpdatePublisher {
         return updates;
     }
 
-    static {
-        for (UUID aTracksToFollow : tracksToFollow) {
-            CURRENT_TRACKS.put(aTracksToFollow, enhancedRandom.nextObject(TrackUpdate.class));
-        }
-    }
-
     private TrackUpdate rollUpdate() {
         enhancedRandom.nextObject(TrackUpdate.class);
         return enhancedRandom.nextObject(TrackUpdate.class);
     }
 
-    private final static Random rand = new Random();
-
-    private static int rollDice(int min, int max) {
+    private static int randomRoll(int min, int max) {
         return rand.nextInt((max - min) + 1) + min;
     }
 }
