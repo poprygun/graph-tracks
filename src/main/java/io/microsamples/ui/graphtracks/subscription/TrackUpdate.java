@@ -2,6 +2,7 @@ package io.microsamples.ui.graphtracks.subscription;
 
 import io.github.benas.randombeans.annotation.Randomizer;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Data
 @ToString
+@NoArgsConstructor
 public class TrackUpdate {
     public TrackUpdate(double latitude, double longitude, LocalDateTime dateTime) {
         id = UUID.randomUUID();
@@ -22,5 +24,5 @@ public class TrackUpdate {
     private UUID id;
     private double latitude;
     private double longitude;
-    private final String dateTime;
+    private String dateTime;
 }

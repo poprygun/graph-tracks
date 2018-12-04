@@ -9,13 +9,13 @@ import java.util.List;
 @Slf4j
 public class Subscription implements GraphQLSubscriptionResolver {
 
-    private TrackUpdatePublisher TrackUpdatePublisher;
+    private UpdatePublisher updatePublisher;
 
-    public Subscription(TrackUpdatePublisher TrackUpdatePublisher) {
-        this.TrackUpdatePublisher = TrackUpdatePublisher;
+    public Subscription(UpdatePublisher trackUpdatePublisher) {
+        this.updatePublisher = trackUpdatePublisher;
     }
 
     public Publisher<TrackUpdate> changedTrack(List<String> trackIds) {
-        return TrackUpdatePublisher.getPublisher(trackIds);
+        return updatePublisher.getPublisher(trackIds);
     }
 }

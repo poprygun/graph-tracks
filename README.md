@@ -1,7 +1,9 @@
 # GraphQL Spring Boot examples
 
-```bash
-mvn spring-boot:run
+This sample project can either use Simple Randomizer as a source for tracks, or RabbitMQ generated tracks by specifying `spring.profiles.active=amqp`.
+
+ ```bash
+mvn spring-boot:run -Dspring.profiles.active=amqp
 ```
 
 Navigate to [Graphiql](http://localhost:8080/graphiql)

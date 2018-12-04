@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 
 @Slf4j
-public class TrackUpdatePublisher {
+public class TrackUpdatePublisher implements UpdatePublisher {
     private final Flowable<TrackUpdate> publisher;
     private static EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandom();
     private final static Map<UUID, TrackUpdate> CURRENT_TRACKS = new ConcurrentHashMap<>();
@@ -76,10 +76,12 @@ public class TrackUpdatePublisher {
         }
     }
 
+    @Override
     public Flowable<TrackUpdate> getPublisher() {
         return publisher;
     }
 
+    @Override
     public Flowable<TrackUpdate> getPublisher(List<String> trackIds) {
         if (trackIds != null) {
             return publisher.filter(trackUpdate -> trackIds.contains(trackUpdate.getId().toString()));
