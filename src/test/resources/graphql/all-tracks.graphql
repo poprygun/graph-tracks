@@ -1,0 +1,7 @@
+query {
+    allTracks(count: 7, offset: 3) {
+        id
+        latitude
+        longitude
+    }
+}

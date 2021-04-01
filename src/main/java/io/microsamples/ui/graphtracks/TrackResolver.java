@@ -1,6 +1,7 @@
 package io.microsamples.ui.graphtracks;
 
-import com.coxautodev.graphql.tools.GraphQLResolver;
+
+import graphql.kickstart.tools.GraphQLResolver;
 
 public class TrackResolver implements GraphQLResolver<Track> {
     private TrackDao trackDao;
