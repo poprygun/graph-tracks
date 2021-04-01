@@ -1,16 +1,18 @@
 package io.microsamples.ui.graphtracks;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
+@AllArgsConstructor
+@Component
 public class TrackDao {
-    private List<Track> tracks;
-
-    public TrackDao(List<Track> tracks) {
-        this.tracks = tracks;
-    }
+    private TrackRepository repository;
 
     public List<Track> getTracks(int count, int offset) {
-        return tracks.stream().skip(offset).limit(count).collect(Collectors.toList());
+        return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 }
