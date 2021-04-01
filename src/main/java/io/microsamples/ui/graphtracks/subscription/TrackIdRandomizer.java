@@ -1,6 +1,7 @@
 package io.microsamples.ui.graphtracks.subscription;
 
-import io.github.benas.randombeans.api.Randomizer;
+
+import org.jeasy.random.api.Randomizer;
 
 import java.util.*;
 

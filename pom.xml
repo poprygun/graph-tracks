@@ -48,9 +48,9 @@
             <version>2.1.14</version>
         </dependency>
         <dependency>
-            <groupId>io.github.benas</groupId>
-            <artifactId>random-beans</artifactId>
-            <version>3.7.0</version>
+            <groupId>org.jeasy</groupId>
+            <artifactId>easy-random-core</artifactId>
+            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>

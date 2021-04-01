@@ -1,13 +1,13 @@
 package io.microsamples.ui.graphtracks.subscription;
 
-import io.github.benas.randombeans.EnhancedRandomBuilder;
-import io.github.benas.randombeans.api.EnhancedRandom;
+
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.observables.ConnectableObservable;
 import lombok.extern.slf4j.Slf4j;
+import org.jeasy.random.EasyRandom;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class TrackUpdatePublisher implements UpdatePublisher {
     private final Flowable<TrackUpdate> publisher;
-    private static EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandom();
+    private static EasyRandom enhancedRandom = new EasyRandom();
     private final static Map<UUID, TrackUpdate> CURRENT_TRACKS = new ConcurrentHashMap<>();
     private final static Random rand = new Random();
 

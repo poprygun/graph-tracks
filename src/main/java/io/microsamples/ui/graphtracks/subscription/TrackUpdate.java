@@ -1,9 +1,9 @@
 package io.microsamples.ui.graphtracks.subscription;
 
-import io.github.benas.randombeans.annotation.Randomizer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.jeasy.random.annotation.Randomizer;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
